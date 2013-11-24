@@ -41,8 +41,10 @@ class New_ticket_model extends CI_Model {
         $this->db->query($string_query_tickets);
         $ID_tickets = $this->db->insert_id();
         $tags = array_map('trim',explode(',', $list_tags));
+        
         //I'm looking if actual new tags are present in tks_tags table 
         $table_tags = TABLE_PREFIX . 'tags';
+        
         $exist_in_tags = array();
         $not_exist_in_tags = array();
         for ($i = 0; $i < sizeof($tags); $i++) {
@@ -57,6 +59,7 @@ class New_ticket_model extends CI_Model {
         }
         $table_link_tags_tickets = TABLE_PREFIX . 'link_tags_tickets';
         //I insert the new tags
+        $table_tags_filters = TABLE_PREFIX .'tags_filters';
         for ($i = 0; $i < sizeof($not_exist_in_tags); $i++) {
             $tag_clean = str_replace(' ','',$not_exist_in_tags[$i]);
             $string_query_tags = "INSERT INTO $table_tags (name) VALUES ('$tag_clean')";
@@ -64,7 +67,7 @@ class New_ticket_model extends CI_Model {
             $ID_tags = $this->db->insert_id();
             $string_query_link_tags_tickets = "INSERT INTO $table_link_tags_tickets (tag_id,ticket_id) VALUES ('$ID_tags','$ID_tickets')";
             $this->db->query($string_query_link_tags_tickets);
-            $table_tags_filters = TABLE_PREFIX .'tags_filters';
+            
             $table_users = TABLE_PREFIX .'users';
             $string_query_users = "SELECT ID FROM $table_users ";
             $rows = $this->db->query($string_query_users);
@@ -74,11 +77,16 @@ class New_ticket_model extends CI_Model {
                 $this->db->query($string_query_filter_tags);
             }
         }
-        //I insert the tags that alredy exist in table tk_tags
+        
+        //I insert the tags that alredy exist in table tks_tags
         for ($i = 0; $i < sizeof($exist_in_tags); $i++) {
             $ID_tags = $exist_in_tags[$i]['ID'];
             $string_query_link_tags_tickets = "INSERT INTO $table_link_tags_tickets (tag_id,ticket_id) VALUES ('$ID_tags','$ID_tickets')";
             $this->db->query($string_query_link_tags_tickets);
+            
+            //update tags in filters if is trash
+            $string_query_tags_filters = "UPDATE $table_tags_filters SET trash='0' WHERE tag_id='$ID_tags'";
+            $this->db->query($string_query_tags_filters);
         }
         
         return true;
