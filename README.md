@@ -13,6 +13,5 @@ Install Instruction:
 
 ```
  Default username: admin
- 
  Default password: password
 ```
