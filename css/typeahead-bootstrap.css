@@ -1,0 +1,66 @@
+/*
+just the bootstrap 3. the problem seems to be the typehead.js is adding an extra input textbox which overlaps on the actual search query textbox.
+it looks like .form-control is a new class in Bootstrap 3 RC and it's a culprit of this issue. this .tt-hint class fix this issue
+*/
+.twitter-typeahead .tt-query,
+.twitter-typeahead .tt-hint {
+  display: block;
+    height: 38px;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.428571429;
+    border: 1px solid #ccc;
+}
+.twitter-typeahead .hint-small
+{
+    height: 30px;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 3px;
+    line-height: 1.5;
+}
+
+.twitter-typeahead .hint-large
+{
+    height: 45px;
+    padding: 10px 16px;
+    font-size: 18px;
+    border-radius: 6px;
+    line-height: 1.33;
+}
+
+
+.tt-dropdown-menu {
+  width: 280px; /*modified if you change the width of tags input box */
+  margin-top: 0px;
+  padding: 0px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0,0,0,.2);
+  *border-right-width: 2px;
+  *border-bottom-width:2px;
+ 
+}
+
+.tt-suggestion {
+  display: block;
+  padding: 3px 20px;
+}
+
+.tt-suggestion.tt-is-under-cursor {
+  color: #fff;
+  background-color: #0081c2;
+
+  
+}
+
+.tt-suggestion.tt-is-under-cursor a {
+  color: #fff;
+}
+
+.tt-suggestion p {
+  margin: 0;
+}
+
+
+

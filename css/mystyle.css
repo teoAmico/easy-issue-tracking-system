@@ -1,0 +1,75 @@
+/*
+Copyright 2013 © Matteo Amico
+This file is part of Tickets.
+
+Tickets is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation either version 2 of the License, or 
+(at your option) any later version.
+
+Tickets is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Tickets.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+.navbar .btn,
+.navbar .btn-group {
+    margin-top: 2px;
+}
+#dashboard_tbl {margin: 0 auto}
+#db_wrap_first_column{ margin: 0 auto;}
+#footer_new_ticket{height: 100px;}
+#footer_dashboard{height: 100px;}
+.checkBoxListTags {
+    max-height:100px;
+    height:auto !important;
+    height:100px;
+    overflow-y: auto;
+
+}
+.dataTables_paginate{
+    float:none;
+    width:100%;
+    text-align: center;
+}
+.dataTables_length{
+    float:right;
+    margin-bottom: 10px;
+}
+.popover {
+    max-width: 600px;
+    width: auto;
+}
+
+.div_separator{
+    height:1px;
+    background:#fff;
+    border-bottom:1px solid #C0C0C0;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.icon_user_info{
+    background-image: url("../images/user_info.png");
+    background-repeat: no-repeat;
+
+}
+#table_tickets_filter{
+    float: left;
+}
+#table_tickets_info{
+    float:none;
+    width:100%;
+    text-align: left;
+    font-size: 14px; 
+}
+.search{
+    width: 450px;
+}
+
+
+
+
