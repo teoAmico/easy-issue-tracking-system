@@ -11,8 +11,8 @@ Install Instruction:
 
 - Configure your base url in application/config/config.php
 
-,,,
-
+```
  Default username: admin
+ 
  Default password: password
-,,,
+```
