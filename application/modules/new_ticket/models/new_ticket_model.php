@@ -29,12 +29,12 @@ class New_ticket_model extends CI_Model {
     
     public function insert_new_ticket($tk_title,$tk_description,$tk_tags,$tk_created_by,$tk_assigned_to,$tk_priority){
         
-        $title = trim(mysql_real_escape_string($tk_title));
-        $description = trim(mysql_real_escape_string($tk_description));
-        $list_tags = trim(mysql_real_escape_string($tk_tags));
-        $created_by = trim(mysql_real_escape_string($tk_created_by));
-        $assigned_to = trim(mysql_real_escape_string($tk_assigned_to));
-        $priority = trim(mysql_real_escape_string($tk_priority));
+        $title = trim($tk_title);
+        $description = trim($tk_description);
+        $list_tags = trim($tk_tags);
+        $created_by = trim($tk_created_by);
+        $assigned_to = trim($tk_assigned_to);
+        $priority = trim($tk_priority);
         $creation_date = date("Y-m-d H:i:s");
         $table_name = TABLE_PREFIX .'tickets';
         $string_query_tickets = "INSERT INTO $table_name (title,description,created_by,creation_date,assigned_to,priority) VALUES ('$title','$description','$created_by','$creation_date','$assigned_to',$priority)";

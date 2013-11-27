@@ -44,6 +44,9 @@ class New_ticket extends MX_Controller {
         //if user is admin show dashboard button
         if ($this->protect_webpage->is_admin()) {
             $data['is_admin'] = TRUE;
+            $data['is_standard'] = FALSE;
+        }else{
+            $data['is_standard'] = TRUE;
         }
         $this->load->module('manage_tickets');
         $data['list_names'] = $this->manage_tickets->list_users_not_blocked_ordered();
@@ -65,12 +68,12 @@ class New_ticket extends MX_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->index();
         } else {
-            $title = $this->input->post('title');
-            $description = $this->input->post('description');
-            $tags = $this->input->post('tags');
+            $title = $this->input->post('title',TRUE);
+            $description = $this->input->post('description',TRUE);
+            $tags = $this->input->post('tags',TRUE);
             $created_by = $sess['user_id'];
-            $assigned_to = $this->input->post('assigned_to');
-            $priority = $this->input->post('priority');
+            $assigned_to = $this->input->post('assigned_to',TRUE);
+            $priority = $this->input->post('priority',TRUE);
             $this->load->model('new_ticket_model');
             $this->new_ticket_model->insert_new_ticket($title, $description, $tags, $created_by, $assigned_to, $priority);
             $this->index();

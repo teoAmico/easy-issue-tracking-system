@@ -45,6 +45,9 @@ class Edit_ticket extends MX_Controller {
         //if user is admin show dashboard button
         if ($this->protect_webpage->is_admin()) {
             $data['is_admin'] = TRUE;
+            $data['is_standard'] = FALSE;
+        }else{
+            $data['is_standard'] = TRUE;
         }
         $ID = null;
         if (is_numeric($ticket_id)) {
@@ -73,17 +76,17 @@ class Edit_ticket extends MX_Controller {
         $this->form_validation->set_rules('title', 'Ticket title', 'required');
         $this->form_validation->set_rules('description', 'Ticket description', 'required');
         $this->form_validation->set_rules('tags', 'Tags', 'required');
-        $ID = $this->input->post('ID');
+        $ID = $this->input->post('ID',TRUE);
         if ($this->form_validation->run() == FALSE) {
             $this->edit($ID);
         } else {
-            $title = $this->input->post('title');
-            $description = $this->input->post('description');
-            $tags = $this->input->post('tags');
+            $title = $this->input->post('title',TRUE);
+            $description = $this->input->post('description',TRUE);
+            $tags = $this->input->post('tags',TRUE);
             $updated_by = $sess['user_id'];
-            $assigned_to = $this->input->post('assigned_to');
-            $priority = $this->input->post('priority');
-            $state = $this->input->post('state');
+            $assigned_to = $this->input->post('assigned_to',TRUE);
+            $priority = $this->input->post('priority',TRUE);
+            $state = $this->input->post('state',TRUE);
             $this->load->model('edit_ticket_model');
             $this->edit_ticket_model->update_ticket($ID,$title, $description, $tags, $updated_by, $assigned_to, $priority, $state);
             echo 'done, implement redirect';

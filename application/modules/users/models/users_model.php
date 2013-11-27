@@ -29,8 +29,8 @@ class Users_model extends CI_Model {
     }
 
     public function select_user($username, $password) {
-        $user = trim(mysql_real_escape_string($username));
-        $pass = sha1(trim(mysql_real_escape_string($password)));
+        $user = trim($username);
+        $pass = sha1(trim($password));
         $table_name = TABLE_PREFIX .'users';
         $string_query = "SELECT * FROM $table_name WHERE name='$user' AND password='$pass'";
         $obj_query = $this->db->query($string_query);
@@ -54,7 +54,7 @@ class Users_model extends CI_Model {
 
     public function select_name_if_exists($username) {
         $table_name = TABLE_PREFIX .'users';
-        $user = trim(mysql_real_escape_string($username));
+        $user = trim($username);
         $string_query = "SELECT ID FROM $table_name WHERE name='$user'";
         $obj_query = $this->db->query($string_query);
         $result = $obj_query->num_rows();
@@ -63,8 +63,8 @@ class Users_model extends CI_Model {
 
     public function insert_user($username, $password, $level_user) {
         $table_name = TABLE_PREFIX .'users';
-        $user = trim(mysql_real_escape_string($username));
-        $pass = sha1(trim(mysql_real_escape_string($password)));
+        $user = trim($username);
+        $pass = sha1(trim($password));
         $level = 1;
         if (is_numeric($level_user) && $level_user != 1) {
             $level = 0;
@@ -97,8 +97,8 @@ class Users_model extends CI_Model {
 
     public function update_user($ID, $username, $password, $user_level,$user_state) {
         $table_name = TABLE_PREFIX .'users';
-        $user = trim(mysql_real_escape_string($username));
-        $pass = sha1(trim(mysql_real_escape_string($password)));
+        $user = trim($username);
+        $pass = sha1(trim($password));
         $level = 1;
         if ($user_level != 1) {
             $level = 0;
@@ -114,9 +114,23 @@ class Users_model extends CI_Model {
         }
     }
 
+    public function update_username_and_or_password($username,$password,$ID){
+        $table_name = TABLE_PREFIX .'users';
+        $user = trim($username);
+        $pass = sha1(trim($password));
+        if (strlen(trim($password)) > 1) {        
+            $string_query = "UPDATE $table_name SET name='$user', password='$pass' WHERE ID='$ID' ";
+            $this->db->query($string_query);
+            return true;
+        } else {
+            $string_query = "UPDATE $table_name SET name='$user' WHERE ID='$ID' ";
+            $this->db->query($string_query);
+            return true;
+        }
+    }
     public function count_name($username, $ID) {
         $table_name = TABLE_PREFIX .'users';
-        $user = trim(mysql_real_escape_string($username));
+        $user = trim($username);
         $string_query = "SELECT ID FROM $table_name WHERE name='$user' AND NOT  ID='$ID'";
         $obj_query = $this->db->query($string_query);
         $result = $obj_query->num_rows();
@@ -127,7 +141,6 @@ class Users_model extends CI_Model {
         $table_name = TABLE_PREFIX .'users';
         $string_query = "SELECT ID, name FROM $table_name WHERE ID NOT LIKE '$ID' ORDER BY name";
         $rows = $this->db->query($string_query);
-        /* created array bidimensional with all users */
         $result = array();
         $i = 0;
         while ($arr = $rows->_fetch_assoc()) {
@@ -141,7 +154,6 @@ class Users_model extends CI_Model {
         $table_name = TABLE_PREFIX .'users';
         $string_query = "SELECT ID, name FROM $table_name WHERE ID NOT LIKE '$ID'  AND NOT state='0' ORDER BY name";
         $rows = $this->db->query($string_query);
-        /* created array bidimensional with all users */
         $result = array();
         $i = 0;
         while ($arr = $rows->_fetch_assoc()) {

@@ -55,6 +55,9 @@ along with Tickets.  If not, see <http://www.gnu.org/licenses/>.
                     if (isset($is_admin) && ($is_admin == true)) {
                         echo '<li><a class="btn" href="' . base_url('dashboard') . '" >Dashboard</a></li>';
                     }
+                    if (isset($is_standard) && ($is_standard == true)) {
+                        echo '<li><a class="btn" href="' . base_url('settings') . '" >Settings</a></li>';
+                    }
                     ?>
                     <li><a class="btn" href="<?php echo base_url('logout'); ?>" >Logout</a></li>
                 </ul> 

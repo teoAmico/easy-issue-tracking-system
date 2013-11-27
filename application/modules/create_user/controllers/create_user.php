@@ -43,9 +43,9 @@ class Create_user  extends MX_Controller {
             $this->load->module('dashboard');
             $this->homepage->index();
         } else {
-            $user = $this->input->post('user');
-            $pass = $this->input->post('pass');
-            $level = $this->input->post('level');
+            $user = $this->input->post('user',TRUE);
+            $pass = $this->input->post('pass',TRUE);
+            $level = $this->input->post('level',TRUE);
             $this->load->module('users');
             if($this->users->name_available($user) == 0){
                 $this->users->registered_user($user, $pass, $level);

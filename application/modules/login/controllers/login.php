@@ -39,8 +39,8 @@ class Login extends MX_Controller {
             $this->load->module('homepage');
             $this->homepage->index();
         } else {
-            $user = $this->input->post('user');
-            $pass = $this->input->post('pass');
+            $user = $this->input->post('user',TRUE);
+            $pass = $this->input->post('pass',TRUE);
             $this->load->module('users');
             $is_loging_in = $this->users->login_user($user, $pass);
             if ($is_loging_in ==2) {

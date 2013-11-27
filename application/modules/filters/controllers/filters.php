@@ -45,26 +45,26 @@ class Filters extends MX_Controller {
     public function apply_filters() {
         $sess = $this->session->all_userdata();
         $input_post = array();
-        $input_post[0] = $this->input->post('created');
-        $input_post[1] = $this->input->post('assigned');
-        $input_post[2] = $this->input->post('updated');
+        $input_post[0] = $this->input->post('created',TRUE);
+        $input_post[1] = $this->input->post('assigned',TRUE);
+        $input_post[2] = $this->input->post('updated',TRUE);
         $input_post[3] = array();
-        if (is_array($this->input->post('priority'))) {
-            foreach ($this->input->post('priority') as $value) {
+        if (is_array($this->input->post('priority',TRUE))) {
+            foreach ($this->input->post('priority',TRUE) as $value) {
                 $input_post[3][] = $value;
             }
         }
         
         $input_post[4] = array();
-        if (is_array($this->input->post('state'))) {
-            foreach ($this->input->post('state') as $value) {
+        if (is_array($this->input->post('state',TRUE))) {
+            foreach ($this->input->post('state',TRUE) as $value) {
                 $input_post[4][] = $value;
             }
         } 
         
         $input_post[5] = array();
-        if (is_array($this->input->post('tags'))) {
-            foreach ($this->input->post('tags') as $value) {
+        if (is_array($this->input->post('tags',TRUE))) {
+            foreach ($this->input->post('tags',TRUE) as $value) {
                 $input_post[5][] = $value;
             }
         }

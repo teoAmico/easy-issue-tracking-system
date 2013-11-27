@@ -1,28 +1,12 @@
 -- Adminer 3.7.1 MySQL dump
-/*
-Copyright 2013 © Matteo Amico
-This file is part of Tickets.
 
-Tickets is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation either version 2 of the License, or 
-(at your option) any later version.
-
-Tickets is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with Tickets.  If not, see <http://www.gnu.org/licenses/>.
-*/
 SET NAMES utf8;
 SET foreign_key_checks = 0;
 SET time_zone = '+00:00';
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 DROP DATABASE IF EXISTS `tksdb`;
-CREATE DATABASE `tksdb` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE `tksdb` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
 USE `tksdb`;
 
 DROP TABLE IF EXISTS `tks_filters`;
@@ -48,10 +32,11 @@ CREATE TABLE `tks_filters` (
   CONSTRAINT `tks_filters_ibfk_2` FOREIGN KEY (`created_by`) REFERENCES `tks_users` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `tks_filters_ibfk_3` FOREIGN KEY (`assigned_to`) REFERENCES `tks_users` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `tks_filters_ibfk_4` FOREIGN KEY (`updated_by`) REFERENCES `tks_users` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `tks_filters` (`ID`, `user_id`, `created_by`, `assigned_to`, `updated_by`, `open`, `inprogress`, `closed`, `low`, `normal`, `high`, `per_page`) VALUES
-(1,	1,	NULL,	NULL,	NULL,	1,	1,	1,	1,	1,	1,	50);
+(1,	1,	NULL,	NULL,	NULL,	1,	1,	1,	1,	1,	1,	50)
+ON DUPLICATE KEY UPDATE `ID` = VALUES(`ID`), `user_id` = VALUES(`user_id`), `created_by` = VALUES(`created_by`), `assigned_to` = VALUES(`assigned_to`), `updated_by` = VALUES(`updated_by`), `open` = VALUES(`open`), `inprogress` = VALUES(`inprogress`), `closed` = VALUES(`closed`), `low` = VALUES(`low`), `normal` = VALUES(`normal`), `high` = VALUES(`high`), `per_page` = VALUES(`per_page`);
 
 DROP TABLE IF EXISTS `tks_link_tags_tickets`;
 CREATE TABLE `tks_link_tags_tickets` (
@@ -64,16 +49,16 @@ CREATE TABLE `tks_link_tags_tickets` (
   KEY `ticket_id` (`ticket_id`),
   CONSTRAINT `tks_link_tags_tickets_ibfk_1` FOREIGN KEY (`tag_id`) REFERENCES `tks_tags` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `tks_link_tags_tickets_ibfk_2` FOREIGN KEY (`ticket_id`) REFERENCES `tks_tickets` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 DROP TABLE IF EXISTS `tks_tags`;
 CREATE TABLE `tks_tags` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 DROP TABLE IF EXISTS `tks_tags_filters`;
@@ -88,14 +73,14 @@ CREATE TABLE `tks_tags_filters` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `tks_tags_filters_ibfk_1` FOREIGN KEY (`tag_id`) REFERENCES `tks_tags` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `tks_tags_filters_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `tks_users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 DROP TABLE IF EXISTS `tks_tickets`;
 CREATE TABLE `tks_tickets` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(1000) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
-  `description` text NOT NULL,
+  `title` varchar(1000) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `description` text CHARACTER SET latin1 NOT NULL,
   `created_by` int(11) DEFAULT NULL,
   `creation_date` datetime NOT NULL,
   `assigned_to` int(11) DEFAULT NULL,
@@ -110,22 +95,23 @@ CREATE TABLE `tks_tickets` (
   CONSTRAINT `tks_tickets_ibfk_3` FOREIGN KEY (`created_by`) REFERENCES `tks_users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `tks_tickets_ibfk_4` FOREIGN KEY (`assigned_to`) REFERENCES `tks_users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `tks_tickets_ibfk_5` FOREIGN KEY (`updated_by`) REFERENCES `tks_users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 DROP TABLE IF EXISTS `tks_users`;
 CREATE TABLE `tks_users` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `password` char(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` char(40) COLLATE utf8_unicode_ci NOT NULL,
   `creation_date` datetime NOT NULL,
   `level` tinyint(4) NOT NULL DEFAULT '0',
   `state` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`ID`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `tks_users` (`ID`, `name`, `password`, `creation_date`, `level`, `state`) VALUES
-(1,	'admin',	'5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8',	'2013-10-29 00:00:00',	0,	1);
+(1,	'admin',	'5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8',	'2013-10-29 00:00:00',	0,	1)
+ON DUPLICATE KEY UPDATE `ID` = VALUES(`ID`), `name` = VALUES(`name`), `password` = VALUES(`password`), `creation_date` = VALUES(`creation_date`), `level` = VALUES(`level`), `state` = VALUES(`state`);
 
--- 2013-11-16 16:56:24
+-- 2013-11-27 20:04:21

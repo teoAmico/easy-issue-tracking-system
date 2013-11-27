@@ -84,12 +84,13 @@ class Manage_tickets extends MX_Controller {
         $this->load->module('filter_tags');
         $data['list_tags'] = $this->filter_tags->full_list_tags();
 
-        // Second row layout
-        //$data['table_tickets_data'] = $this->select_tickets_by_filters($sess['user_id']);
 
         //if user is admin show dashboard button
         if ($this->protect_webpage->is_admin()) {
             $data['is_admin'] = TRUE;
+            $data['is_standard'] = FALSE;
+        }else{
+            $data['is_standard'] = TRUE;
         }
         /* load module layout of the page */
         $data['username'] = $sess['name'];
@@ -139,20 +140,20 @@ class Manage_tickets extends MX_Controller {
             
         );
         $sLimit = "";
-        if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
-            $sLimit = " LIMIT " . mysql_real_escape_string($_GET['iDisplayStart']) . ", " .
-                    mysql_real_escape_string($_GET['iDisplayLength']);
+        if ($this->input->get('iDisplayStart') && ($this->input->get('iDisplayLength') != '-1')) {
+            $sLimit = " LIMIT " . $this->input->get('iDisplayStart',TRUE) . ", " .
+                    $this->input->get('iDisplayLength',TRUE);
         }
         /*
          * Ordering
          */
         $sOrder = "";
-        if (isset($_GET['iSortCol_0'])) {
+        if ($this->input->get('iSortCol_0')) {
             $sOrder = " ORDER BY  ";
-            for ($i = 0; $i < intval($_GET['iSortingCols']); $i++) {
-                if ($_GET['bSortable_' . intval($_GET['iSortCol_' . $i])] == "true") {
-                    $sOrder .= $aColumns[intval($_GET['iSortCol_' . $i])] . "
-				 	" . mysql_real_escape_string($_GET['sSortDir_' . $i]) . ", ";
+            for ($i = 0; $i < intval($this->input->get('iSortingCols')); $i++) {
+                if ($this->input->get('bSortable_' . intval($this->input->get('iSortCol_' . $i))) == "true") {
+                    $sOrder .= $aColumns[intval($this->input->get('iSortCol_' . $i))] . "
+				 	" . $this->input->get('sSortDir_' . $i,TRUE) . ", ";
                 }
             }
 
@@ -168,10 +169,10 @@ class Manage_tickets extends MX_Controller {
          * on very large tables, and MySQL's regex functionality is very limited
          */
         $sWhere = "";
-        if ($_GET['sSearch'] != "") {
+        if ($this->input->get('sSearch') != "") {
             $sWhere = " ";
             for ($i = 0; $i < count($bColumns); $i++) {
-                $sWhere .= $bColumns[$i] . " LIKE '%" . mysql_real_escape_string($_GET['sSearch']) . "%' OR ";
+                $sWhere .= $bColumns[$i] . " LIKE '%" . $this->input->get('sSearch',TRUE) . "%' OR ";
             }
             $sWhere = substr_replace($sWhere, "", -3);
             $sWhere .= " AND ";
@@ -180,9 +181,9 @@ class Manage_tickets extends MX_Controller {
         //Individual column filtering 
 
         for ($i = 0; $i < count($bColumns); $i++) {
-            if ($_GET['bSearchable_' . $i] == "true" && $_GET['sSearch_' . $i] != '') {
+            if ($this->input->get('bSearchable_' . $i) == "true" && $this->input->get('sSearch_' . $i) != '') {
                     $sWhere .= " ";
-                $sWhere .= $bColumns[$i] . " LIKE '%" . mysql_real_escape_string($_GET['sSearch_' . $i]) . "%' ";
+                $sWhere .= $bColumns[$i] . " LIKE '%" . $this->input->get('sSearch_' . $i,TRUE) . "%' ";
                 $sWhere .= " AND ";
             }
         }

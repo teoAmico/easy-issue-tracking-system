@@ -28,13 +28,13 @@ class Edit_ticket_model extends CI_Model {
     }
 
     public function update_ticket($ID, $tks_title, $tks_description, $tks_tags, $tks_updated_by, $tks_assigned_to, $tks_priority, $tks_state) {
-        $title = trim(mysql_real_escape_string($tks_title));
-        $description = trim(mysql_real_escape_string($tks_description));
-        $list_tags = trim(mysql_real_escape_string($tks_tags));
-        $updated_by = trim(mysql_real_escape_string($tks_updated_by));
-        $assigned_to = trim(mysql_real_escape_string($tks_assigned_to));
-        $priority = trim(mysql_real_escape_string($tks_priority));
-        $state = trim(mysql_real_escape_string($tks_state));
+        $title = trim($tks_title);
+        $description = trim($tks_description);
+        $list_tags = trim($tks_tags);
+        $updated_by = trim($tks_updated_by);
+        $assigned_to = trim($tks_assigned_to);
+        $priority = trim($tks_priority);
+        $state = trim($tks_state);
         $update_date = date("Y-m-d H:i:s");
         $ID_tickets = trim($ID);
         $table_ticket = TABLE_PREFIX . 'tickets';

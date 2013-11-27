@@ -46,11 +46,11 @@ class Edit_user extends MX_Controller {
     }
 
     public function update() {
-        $ID = $this->input->post('ID');
-        $state = $this->input->post('state');
-        $level = $this->input->post('level');
-        $user = $this->input->post('user');
-        $pass = $this->input->post('pass');
+        $ID = $this->input->post('ID',TRUE);
+        $state = $this->input->post('state',TRUE);
+        $level = $this->input->post('level',TRUE);
+        $user = $this->input->post('user',TRUE);
+        $pass = $this->input->post('pass',TRUE);
         // I check if this user is the only admnistrator in case I want to change his level
         $this->load->module('users');
         $is_the_only_admin = $this->users->is_the_only_admin($ID, $level);

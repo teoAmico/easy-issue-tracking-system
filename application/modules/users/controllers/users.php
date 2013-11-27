@@ -76,11 +76,8 @@ class Users extends MX_Controller {
         $db_result = $this->users_model->select_all_users($order_by);
         return $db_result;
     }
-
-    /*
-     * This function check if a name is available
-     */
-
+    
+    
     public function name_available($username = null) {
         $db_result = $this->users_model->select_name_if_exists($username);
         return $db_result;
@@ -159,5 +156,8 @@ class Users extends MX_Controller {
         return $db_result;
     }
     
-
+    public function updated_user($username,$password,$ID){
+        $db_result = $this->users_model->update_username_and_or_password($username,$password,$ID);
+        return $db_result;
+    }
 }

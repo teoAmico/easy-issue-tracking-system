@@ -39,7 +39,7 @@ along with Tickets.  If not, see <http://www.gnu.org/licenses/>.
             <?php
             $attr_lb_user = array('class' => 'control-label');
             echo form_label('Username', 'username', $attr_lb_user);
-            echo form_error('user', '<div style="color#ff0000">', '</div>');
+            echo form_error('user', '<div style="color:#ff0000">', '</div>');
             echo '<div style="color:#ff0000" id="name_error"></div>';
             $attr_username = 'id="username" class="form-control"';
             echo form_input('user', set_value('user'), $attr_username);
@@ -53,7 +53,7 @@ along with Tickets.  If not, see <http://www.gnu.org/licenses/>.
             <?php
             $attr_lb_pass = array('class' => 'control-label');
             echo form_label('Password', 'password', $attr_lb_pass);
-            echo form_error('pass', '<div style="color#ff0000">', '</div>');
+            echo form_error('pass', '<div style="color:#ff0000">', '</div>');
             $attr_password = 'id="password" class="form-control" placeholder="New password"';
             echo form_password('pass', '', $attr_password);
             ?>    
