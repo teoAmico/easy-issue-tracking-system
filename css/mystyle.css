@@ -1,5 +1,5 @@
 /*
-Copyright 2013 © Matteo Amico
+Copyright 2013 ï¿½ Matteo Amico
 This file is part of Tickets.
 
 Tickets is free software: you can redistribute it and/or modify
@@ -68,6 +68,9 @@ along with Tickets.  If not, see <http://www.gnu.org/licenses/>.
 }
 .search{
     width: 450px;
+}
+#description{
+    min-height: 500px;
 }
 
 

@@ -37,8 +37,11 @@ class New_ticket_model extends CI_Model {
         $priority = trim($tk_priority);
         $creation_date = date("Y-m-d H:i:s");
         $table_name = TABLE_PREFIX .'tickets';
-        $string_query_tickets = "INSERT INTO $table_name (title,description,created_by,creation_date,assigned_to,priority) VALUES ('$title','$description','$created_by','$creation_date','$assigned_to',$priority)";
-        $this->db->query($string_query_tickets);
+        $string_query_tickets = "INSERT INTO $table_name 
+            (title,description,created_by,creation_date,assigned_to,priority) 
+            VALUES (?,?,?,?,?,?)";
+        $values_tickets = array("$title","$description","$created_by","$creation_date","$assigned_to","$priority");
+        $this->db->query($string_query_tickets,$values_tickets);
         $ID_tickets = $this->db->insert_id();
         $tags = array_map('trim',explode(',', $list_tags));
         
@@ -48,8 +51,9 @@ class New_ticket_model extends CI_Model {
         $exist_in_tags = array();
         $not_exist_in_tags = array();
         for ($i = 0; $i < sizeof($tags); $i++) {
-            $query_tags = "SELECT * FROM $table_tags WHERE name='$tags[$i]'";
-            $row = $this->db->query($query_tags);
+            $query_tags = "SELECT * FROM $table_tags WHERE name=?";
+            $values_tags = array("$tags[$i]");
+            $row = $this->db->query($query_tags,$values_tags);
             $result = $row->_fetch_assoc();
             if(isset($result)){
                 $exist_in_tags[] = $result;
@@ -62,8 +66,9 @@ class New_ticket_model extends CI_Model {
         $table_tags_filters = TABLE_PREFIX .'tags_filters';
         for ($i = 0; $i < sizeof($not_exist_in_tags); $i++) {
             $tag_clean = str_replace(' ','',$not_exist_in_tags[$i]);
-            $string_query_tags = "INSERT INTO $table_tags (name) VALUES ('$tag_clean')";
-            $this->db->query($string_query_tags);
+            $string_query_tags = "INSERT INTO $table_tags (name) VALUES (?)";
+            $values_tags = array("$tag_clean");
+            $this->db->query($string_query_tags,$values_tags);
             $ID_tags = $this->db->insert_id();
             $string_query_link_tags_tickets = "INSERT INTO $table_link_tags_tickets (tag_id,ticket_id) VALUES ('$ID_tags','$ID_tickets')";
             $this->db->query($string_query_link_tags_tickets);

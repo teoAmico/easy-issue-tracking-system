@@ -84,7 +84,7 @@ along with Tickets.  If not, see <http://www.gnu.org/licenses/>.
             echo form_label('Ticket description', 'description', $attr_lb_description);
             echo form_error('description', '<div style="color:#ff0000" id="description_error">', '</div>');
             echo '<div style="color:#ff0000" id="description_error"></div>';
-            $description_attr = 'class="form-control" id=description';
+            $description_attr = 'class="form-control" id="description"';
             $description = '';
             if (isset($ticket_data)) {
                 $description = $ticket_data['description'];

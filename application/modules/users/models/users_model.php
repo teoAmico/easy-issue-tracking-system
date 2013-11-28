@@ -32,16 +32,18 @@ class Users_model extends CI_Model {
         $user = trim($username);
         $pass = sha1(trim($password));
         $table_name = TABLE_PREFIX .'users';
-        $string_query = "SELECT * FROM $table_name WHERE name='$user' AND password='$pass'";
-        $obj_query = $this->db->query($string_query);
+        $string_query = "SELECT * FROM $table_name WHERE name=? AND password=?";
+        $values = array("$user","$pass");
+        $obj_query = $this->db->query($string_query,$values);
         $result = $obj_query->_fetch_assoc();
         return $result;
     }
 
     public function select_all_users($order_by) {
         $table_name = TABLE_PREFIX .'users';
-        $string_query = "SELECT ID, name , creation_date, level, state FROM $table_name ORDER BY $order_by";
-        $rows = $this->db->query($string_query);
+        $string_query = "SELECT ID, name , creation_date, level, state FROM $table_name ORDER BY ?";
+        $values = array("$order_by");
+        $rows = $this->db->query($string_query, $values);
         /* created array bidimensional with all users */
         $result = array();
         $i = 0;
@@ -55,8 +57,9 @@ class Users_model extends CI_Model {
     public function select_name_if_exists($username) {
         $table_name = TABLE_PREFIX .'users';
         $user = trim($username);
-        $string_query = "SELECT ID FROM $table_name WHERE name='$user'";
-        $obj_query = $this->db->query($string_query);
+        $string_query = "SELECT ID FROM $table_name WHERE name=?";
+        $values = array("$user");
+        $obj_query = $this->db->query($string_query,$values);
         $result = $obj_query->num_rows();
         return $result;
     }
@@ -70,8 +73,9 @@ class Users_model extends CI_Model {
             $level = 0;
         }
         $date = date("Y-m-d H:i:s");
-        $string_query_new_user = "INSERT INTO $table_name (name,password, creation_date, level) VALUES ('$user','$pass', '$date','$level')";
-        $this->db->query($string_query_new_user);
+        $string_query_new_user = "INSERT INTO $table_name (name,password, creation_date, level) VALUES (?,?, ?,?)";
+        $values_new_user = array("$user","$pass","$date","$level");
+        $this->db->query($string_query_new_user,$values_new_user);
         $ID_user = $this->db->insert_id();
         $table_name = TABLE_PREFIX .'filters';
         $string_query_filter_new_user = "INSERT INTO $table_name (user_id) VALUES ('$ID_user')";
@@ -104,12 +108,14 @@ class Users_model extends CI_Model {
             $level = 0;
         }
         if (strlen(trim($password)) > 1) {        
-            $string_query = "UPDATE $table_name SET name='$user', password='$pass', level='$level', state='$user_state' WHERE ID='$ID' ";
-            $this->db->query($string_query);
+            $string_query = "UPDATE $table_name SET name=?, password=?, level=?, state=? WHERE ID='$ID' ";
+            $values = array("$user","$pass","$level","$user_state");
+            $this->db->query($string_query,$values);
             return true;
         } else {
-            $string_query = "UPDATE $table_name SET name='$user', level='$level', state='$user_state' WHERE ID='$ID' ";
-            $this->db->query($string_query);
+            $string_query = "UPDATE $table_name SET name=?, level=?, state=? WHERE ID='$ID' ";
+            $values = array("$user","$level","$user_state");
+            $this->db->query($string_query,$values);
             return true;
         }
     }
@@ -119,20 +125,23 @@ class Users_model extends CI_Model {
         $user = trim($username);
         $pass = sha1(trim($password));
         if (strlen(trim($password)) > 1) {        
-            $string_query = "UPDATE $table_name SET name='$user', password='$pass' WHERE ID='$ID' ";
-            $this->db->query($string_query);
+            $string_query = "UPDATE $table_name SET name=?, password=? WHERE ID='$ID' ";
+            $values = array("$user","$pass");
+            $this->db->query($string_query,$values);
             return true;
         } else {
-            $string_query = "UPDATE $table_name SET name='$user' WHERE ID='$ID' ";
-            $this->db->query($string_query);
+            $string_query = "UPDATE $table_name SET name=? WHERE ID='$ID' ";
+            $values = array("$user");
+            $this->db->query($string_query,$values);
             return true;
         }
     }
     public function count_name($username, $ID) {
         $table_name = TABLE_PREFIX .'users';
         $user = trim($username);
-        $string_query = "SELECT ID FROM $table_name WHERE name='$user' AND NOT  ID='$ID'";
-        $obj_query = $this->db->query($string_query);
+        $string_query = "SELECT ID FROM $table_name WHERE name=? AND NOT  ID='$ID'";
+        $values = array("$user");
+        $obj_query =  $this->db->query($string_query,$values);
         $result = $obj_query->num_rows();
         return $result;
     }
