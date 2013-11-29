@@ -39,7 +39,7 @@ class Filters_model extends CI_Model {
         $table_filters = TABLE_PREFIX . 'filters';
         $created = 'NULL';
         $assigned = 'NULL';
-        $updated ='NULL';
+        $updated = 'NULL';
         if($data_to_update[0] != 0){
             $created = "$data_to_update[0]";
         }
@@ -83,10 +83,10 @@ class Filters_model extends CI_Model {
         }
         
         $string_query_update_filters = "UPDATE $table_filters 
-            SET created_by=?,assigned_to=?,updated_by=?,open=?,
+            SET created_by=$created,assigned_to=$assigned,updated_by=$updated,open=?,
                 inprogress=?,closed=?,low=?,normal=?,high=?
                 WHERE user_id='$ID'";
-        $values_update_filters = array("$created","$assigned","$updated","$open","$inprogress","$closed","$low","$normal","$high");
+        $values_update_filters = array("$open","$inprogress","$closed","$low","$normal","$high");
         $this->db->query($string_query_update_filters,$values_update_filters);
 
         //update tags filters table

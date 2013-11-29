@@ -61,6 +61,7 @@ class Manage_tickets extends MX_Controller {
     }
 
     public function index($data = null) {
+        $data['title_page'] = 'Manage tickets - Tickets v'.APPLICATION_VERSION;
         $sess = $this->session->all_userdata();
         $data['list_names_full'] = $this->list_users_ordered();
         $data['list_names_not_blocked'] = $this->list_users_not_blocked_ordered();

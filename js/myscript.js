@@ -602,8 +602,11 @@ $(document).ready(function() {
             ],
             "fnRowCallback": function(nRow, aData, iDisplayIndex) {
                 $('td', nRow).each(function(i, v) {
+                    //ID
                     $('td:eq(0)', nRow).addClass('text-center');
+                    //Title ticekts
                     $('td:eq(1)', nRow).css({width: '350px'});
+                    //State
                     if (aData[2] === '0') {
                         $('td:eq(2)', nRow).html('Open');
                         $('td:eq(2)', nRow).addClass('text-center');
@@ -620,6 +623,7 @@ $(document).ready(function() {
                         $('td:eq(2)', nRow).addClass('text-center');
                         $('td:eq(2)', nRow).css({color: '#fff', background: '#ff0000', width: '125px'});
                     }
+                    //Priority
                     if (aData[3] === '0') {
                         $('td:eq(3)', nRow).addClass('text-center');
                         $('td:eq(3)', nRow).html('Low');
@@ -636,26 +640,30 @@ $(document).ready(function() {
                         $('td:eq(3)', nRow).html('High');
                         $('td:eq(3)', nRow).css({width: '80px'});
                     }
+                    //Tags
                     $('td:eq(4)', nRow).css({width: '150px'});
-
+                    //Created by
                     var a_creation_date = '<a class="popoverCreated" id="trigger_pop_created_' + aData[0] + '" href="javascript:void(0)" rel="popover" data-placement="bottom" data-original-title="Creation date" >' + aData[5] + '</a>';
                     $('td:eq(5)', nRow).html(a_creation_date);
                     $('td:eq(5)', nRow).addClass('text-center');
+                    //Creation date (hidden by css)
                     $('td:eq(6)', nRow).attr('id', 'content_pop_created_' + aData[0]);
                     $('td:eq(6)', nRow).addClass('text-center');
                     $('td:eq(6)', nRow).css({display: 'none', visibility: 'hidden'});
+                    //Assigned to
                     $('td:eq(7)', nRow).addClass('text-center');
-                    var a_update_date = ''
+                    //Updated by
+                    var a_update_date = '';
                     if (aData[8] !== null) {
                         a_update_date = '<a class="popoverUpdated" id="trigger_pop_update_' + aData[0] + '" href="javascript:void(0)" rel="popover" data-placement="bottom" data-original-title="Update date" >' + aData[8] + '</a>';
                     }
-
                     $('td:eq(8)', nRow).html(a_update_date);
                     $('td:eq(8)', nRow).addClass('text-center');
-
+                    //Update date (hidden by css)
                     $('td:eq(9)', nRow).addClass('text-center');
                     $('td:eq(9)', nRow).attr('id', 'content_pop_update_' + aData[0]);
                     $('td:eq(9)', nRow).css({display: 'none', visibility: 'hidden'});
+                    //Action
                     var edit_btn = '<a class="btn btn-primary btn-xs" href="edit_ticket/edit/' + aData[0] + '">Edit</a>';
                     $('td:eq(10)', nRow).html(edit_btn);
                     $('td:eq(10)', nRow).addClass('text-center');
@@ -663,8 +671,6 @@ $(document).ready(function() {
                     return nRow;
                 });
             }
-
-
         });
 
         $('.dataTables_filter input').addClass('search');

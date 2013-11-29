@@ -21,6 +21,7 @@ along with Tickets.  If not, see <http://www.gnu.org/licenses/>.
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title><?php if(isset($title_page)) echo $title_page;?></title>
         <!-- Jquery -->
         <script charset="utf-8" type="text/javascript"  src="<?php js_url('jquery-1.10.2.js'); ?>"></script>
         <script charset="utf-8" type="text/javascript"  src="<?php js_url("jquery-ui.min.js"); ?>"></script>

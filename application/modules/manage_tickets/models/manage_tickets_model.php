@@ -250,7 +250,7 @@ class Manage_tickets_model extends CI_Model {
          */
 
         $output = array(
-            "sEcho" => intval($_GET['sEcho']),
+            "sEcho" => intval($this->input->get('sEcho',TRUE)),
             "iTotalRecords" => $iTotal,
             "iTotalDisplayRecords" => $iFilteredTotal,
             "aaData" => array(),

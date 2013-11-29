@@ -32,6 +32,7 @@ class Edit_ticket extends MX_Controller {
     }
 
     public function edit($ticket_id = null, $data = null) {
+        $data['title_page'] = 'Edit ticket - Tickets v'.APPLICATION_VERSION;
         $sess = $this->session->all_userdata();
         $data['creation_date'] = $sess['creation_date'];
         $data['created_open'] = $sess['created_open'];

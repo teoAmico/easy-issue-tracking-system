@@ -29,6 +29,7 @@ class Homepage  extends MX_Controller {
     }
     
     public function index($data = null){
+        $data['title_page'] = 'Login - Tickets v'.APPLICATION_VERSION;
         $data['view_file'] = 'login_form';
         $data['module'] = 'login';
         $this->load->module('templates');
