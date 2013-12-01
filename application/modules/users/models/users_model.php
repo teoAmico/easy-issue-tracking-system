@@ -44,7 +44,6 @@ class Users_model extends CI_Model {
         $string_query = "SELECT ID, name , creation_date, level, state FROM $table_name ORDER BY ?";
         $values = array("$order_by");
         $rows = $this->db->query($string_query, $values);
-        /* created array bidimensional with all users */
         $result = array();
         $i = 0;
         while ($arr = $rows->_fetch_assoc()) {

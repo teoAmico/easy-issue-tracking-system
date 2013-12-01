@@ -34,14 +34,16 @@ class New_ticket extends MX_Controller {
     public function index($data = null) {
         $data['title_page'] = 'New ticket - Tickets v'.APPLICATION_VERSION;
         $sess = $this->session->all_userdata();
+        $this->load->module("users");
+        $user_info = $this->users->user_info($sess['user_id']);
         $data['creation_date'] = $sess['creation_date'];
-        $data['created_open'] = $sess['created_open'];
-        $data['created_inprogress'] = $sess['created_inprogress'];
-        $data['created_closed'] = $sess['created_closed'];
-        $data['assigned_open'] = $sess['assigned_open'];
-        $data['assigned_inprogress'] = $sess['assigned_inprogress'];
-        $data['assigned_closed'] = $sess['assigned_closed'];
-        $data['updated'] = $sess['updated'];
+        $data['created_open'] = $user_info['created_open'];
+        $data['created_inprogress'] = $user_info['created_inprogress'];
+        $data['created_closed'] = $user_info['created_closed'];
+        $data['assigned_open'] = $user_info['assigned_open'];
+        $data['assigned_inprogress'] = $user_info['assigned_inprogress'];
+        $data['assigned_closed'] = $user_info['assigned_closed'];
+        $data['updated'] = $user_info['updated'];
         //if user is admin show dashboard button
         if ($this->protect_webpage->is_admin()) {
             $data['is_admin'] = TRUE;

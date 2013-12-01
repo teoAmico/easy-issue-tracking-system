@@ -35,22 +35,6 @@ class Templates extends MX_Controller {
         $this->load->view('registered_tmpl', $data);
     }
 
-    public function user_info_ajax() {
-        $sess = $this->session->all_userdata();
-        $this->load->model('users/users_model','users_model');
-        $tickets_info = $this->users_model->user_info_tickets($sess['user_id']);
-                //set session data
-                $session_data = array(
-                    'created_open' =>$tickets_info['created_open'],
-                    'created_inprogress' =>$tickets_info['created_inprogress'],
-                    'created_closed' =>$tickets_info['created_closed'],
-                    'assigned_open' =>$tickets_info['assigned_open'],
-                    'assigned_inprogress' =>$tickets_info['assigned_inprogress'],
-                    'assigned_closed' =>$tickets_info['assigned_closed'],
-                    'updated' =>$tickets_info['updated']
-                );
-         $this->session->set_userdata($session_data);
-         echo json_encode($session_data);
-    }
+    
 
 }

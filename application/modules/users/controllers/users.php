@@ -51,6 +51,7 @@ class Users extends MX_Controller {
                     'logged_in' => TRUE,
                     'user_level' => $db_result['level'],
                     'creation_date' => $db_result['creation_date'],
+                    //not use 
                     'created_open' =>$tickets_info['created_open'],
                     'created_inprogress' =>$tickets_info['created_inprogress'],
                     'created_closed' =>$tickets_info['created_closed'],
@@ -158,6 +159,11 @@ class Users extends MX_Controller {
     
     public function updated_user($username,$password,$ID){
         $db_result = $this->users_model->update_username_and_or_password($username,$password,$ID);
+        return $db_result;
+    }
+    
+    public function user_info($ID){
+        $db_result = $this->users_model->user_info_tickets($ID);
         return $db_result;
     }
 }

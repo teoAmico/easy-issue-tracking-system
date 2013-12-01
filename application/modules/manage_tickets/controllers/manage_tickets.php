@@ -65,14 +65,16 @@ class Manage_tickets extends MX_Controller {
         $sess = $this->session->all_userdata();
         $data['list_names_full'] = $this->list_users_ordered();
         $data['list_names_not_blocked'] = $this->list_users_not_blocked_ordered();
+        $this->load->module("users");
+        $user_info = $this->users->user_info($sess['user_id']);
         $data['creation_date'] = $sess['creation_date'];
-        $data['created_open'] = $sess['created_open'];
-        $data['created_inprogress'] = $sess['created_inprogress'];
-        $data['created_closed'] = $sess['created_closed'];
-        $data['assigned_open'] = $sess['assigned_open'];
-        $data['assigned_inprogress'] = $sess['assigned_inprogress'];
-        $data['assigned_closed'] = $sess['assigned_closed'];
-        $data['updated'] = $sess['updated'];
+        $data['created_open'] = $user_info['created_open'];
+        $data['created_inprogress'] = $user_info['created_inprogress'];
+        $data['created_closed'] = $user_info['created_closed'];
+        $data['assigned_open'] = $user_info['assigned_open'];
+        $data['assigned_inprogress'] = $user_info['assigned_inprogress'];
+        $data['assigned_closed'] = $user_info['assigned_closed'];
+        $data['updated'] = $user_info['updated'];
 
 
         // first row layout

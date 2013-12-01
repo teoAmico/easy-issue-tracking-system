@@ -21,7 +21,7 @@ $(document).ready(function() {
      * TinyMce Editor
      */
     var base_url = window.location.protocol + "//" + window.location.host + "/";
-    var url = base_url + "tickets/css/myTinyMCE.css"
+    var url = base_url + "tickets/css/myTinyMCE.css";
     tinymce.init({
         selector: "#description",
         theme: "modern",
@@ -68,7 +68,7 @@ $(document).ready(function() {
                     $('#username').attr('readOnly', true);
                     $('#password').attr('readOnly', true);
                 }
-                $('input[name=ID]').val(result['ID'])
+                $('input[name=ID]').val(result['ID']);
                 var edit_title = '<legend>Edit user - ' + result['name'] + '</legend>';
                 $('#edit_legend').html(edit_title);
                 $('#loading').hide();
@@ -183,12 +183,12 @@ $(document).ready(function() {
         var username = $('#username').val().length;
         if (username === 0) {
             $('#name_error').html('<p>The username field is required.</p>');
-            if($('.msg').length){
+            if ($('.msg').length) {
                 $('.msg').hide();
             }
             return false;
         }
-        
+
     });
 
     $('body').on('submit', '#edit_user_form', function(e) {
@@ -481,6 +481,7 @@ $(document).ready(function() {
         }
 
     });
+
     $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
     {
         return {
@@ -569,7 +570,7 @@ $(document).ready(function() {
     });
     if ($('#table_tickets').length) {
         var oTable = $('#table_tickets').dataTable({
-            "sProcessing": false, //you can see the phrase "precessing..." because I delete children of tbody tag for not see old content before the update of new content has clompleted
+            "sProcessing": false, //you can't see the phrase "precessing..." because I delete children of tbody tag for not to see old content before the update of new content has clompleted
             "bServerSide": true,
             "sAjaxSource": './manage_tickets/select_data_tickets_ajax',
             "bJQueryUI": false,
@@ -604,7 +605,7 @@ $(document).ready(function() {
                 $('td', nRow).each(function(i, v) {
                     //ID
                     $('td:eq(0)', nRow).addClass('text-center');
-                    //Title ticekts
+                    //Title tickets
                     $('td:eq(1)', nRow).css({width: '350px'});
                     //State
                     if (aData[2] === '0') {
@@ -701,13 +702,15 @@ $(document).ready(function() {
             'data': string_data,
             'success': function(data) {
                 var result = JSON.parse(data);
-                $("#manage_table_loading").hide();
-                $("#table_tickets_info").html("");
-                $("#table_tickets > tbody").html(""); //I delete all children for not to see the old rows untill the new updated is completed
-                $('#div_table_manage_tickets').show();
-                //reload the table width  new data
+                if (result['update'] === true) {
+                    $("#manage_table_loading").hide();
+                    $("#table_tickets_info").html("");
+                    $("#table_tickets > tbody").html(""); //I delete all children for not to see the old rows untill the new updated is completed
+                    $('#div_table_manage_tickets').show();
+                    //reload the table width  new data
+                    oTable.fnReloadAjax();
+                }
 
-                oTable.fnReloadAjax();
                 return false;
             }
 
@@ -749,38 +752,15 @@ $(document).ready(function() {
     /*
      * Popover in nav bar
      */
-
     if ($('#pop_user_nav').length) {
         $('#pop_user_nav').popover({
             'trigger': "click",
             'html': true,
             'content': function() {
-                //ajax call for update content
-                var base_url = window.location.protocol + "//" + window.location.host + "/";
-                var url = base_url + "tickets/templates/user_info_ajax";
-                $.ajax({
-                    'url': url,
-                    'type': 'POST',
-                    'data': '',
-                    'success': function(data) {
-                        var result = JSON.parse(data);
-                        $('#tks_created_open').html(result['created_open']);
-                        $('#tks_created_inprogress').html(result['created_inprogress']);
-                        $('#tks_created_closed').html(result['created_closed']);
-
-                        $('#tks_assigned_open').html(result['assigned_open']);
-                        $('#tks_assigned_inprogress').html(result['assigned_inprogress']);
-                        $('#tks_assigned_closed').html(result['assigned_closed']);
-
-                        $('#tks_updated').html(result['updated']);
-                    }
-                });
-                var content = $('#pop_user_content').html();
-                return content;
+                return $('#pop_user_content').html();
             }
         });
     }
-
     $('body').on('mouseup', function(e) {
         $('.popover').hide();
         $('#pop_user_nav').popover('hide');
