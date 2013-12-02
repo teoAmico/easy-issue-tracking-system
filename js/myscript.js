@@ -568,20 +568,31 @@ $(document).ready(function() {
             }
         }
     });
-    if ($('#table_tickets').length) {
+
+    if ($('#div_table_manage_tickets').length) {
+        $('#div_table_manage_tickets').hide();
+        $("#manage_table_loading").show();
         var oTable = $('#table_tickets').dataTable({
             "sProcessing": false, //you can't see the phrase "precessing..." because I delete children of tbody tag for not to see old content before the update of new content has clompleted
             "bServerSide": true,
             "sAjaxSource": './manage_tickets/select_data_tickets_ajax',
             "bJQueryUI": false,
-            "iDisplayStart": 0,
-            "sPaginationType": "bootstrap",
-            "bFilter": true,
-            "bInfo": true,
-            "iDisplayLength": 50, //default
-            "bPaginate": true,
-            "oLanguage": {
-                "sLengthMenu": '<small><strong>Show per page&nbsp;&nbsp;</strong></small><select name="per_page">' +
+            "iDisplayStart"
+                    : 0,
+            "sPaginationType"
+                    : "bootstrap",
+            "bFilter"
+                    : true,
+            "bInfo"
+                    : true,
+            "iDisplayLength"
+                    : 50, //default
+            "bPaginate"
+                    : true,
+            "oLanguage"
+                    : {
+                "sLengthMenu"
+                        : '<small><strong>Show per page&nbsp;&nbsp;</strong></small><select name="per_page">' +
                         '<option value="50">50</option>' +
                         '<option value="75">75</option>' +
                         '<option value="100">100</option>' +
@@ -601,7 +612,12 @@ $(document).ready(function() {
                 null, //update date
                 {"bSortable": false} //edit
             ],
+            "fnDrawCallback": function(oSettings) {
+                $("#manage_table_loading").hide();
+                $('#div_table_manage_tickets').show();
+            },
             "fnRowCallback": function(nRow, aData, iDisplayIndex) {
+                $("#table_tickets > tbody").html(""); //delete all child td before load data
                 $('td', nRow).each(function(i, v) {
                     //ID
                     $('td:eq(0)', nRow).addClass('text-center');
@@ -668,19 +684,17 @@ $(document).ready(function() {
                     var edit_btn = '<a class="btn btn-primary btn-xs" href="edit_ticket/edit/' + aData[0] + '">Edit</a>';
                     $('td:eq(10)', nRow).html(edit_btn);
                     $('td:eq(10)', nRow).addClass('text-center');
-
+                    $("#manage_table_loading").hide();
                     return nRow;
                 });
             }
         });
-
         $('.dataTables_filter input').addClass('search');
     }
 
     /*
      * Filter
      */
-    $("#manage_table_loading").hide();
     $('body').on('submit', '#filters_form', function(e) {
 
         e.preventDefault();
