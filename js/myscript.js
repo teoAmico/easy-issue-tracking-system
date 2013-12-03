@@ -618,11 +618,24 @@ $(document).ready(function() {
             },
             "fnRowCallback": function(nRow, aData, iDisplayIndex) {
                 $("#table_tickets > tbody").html(""); //delete all child td before load data
+                Date.createFromMysql = function(mysql_string) {
+                    if (typeof mysql_string === 'string')
+                    {
+                        var t = mysql_string.split(/[- :]/);
+
+                        //when t[3], t[4] and t[5] are missing they defaults to zero
+                        return new Date(t[0], t[1] - 1, t[2], t[3] || 0, t[4] || 0, t[5] || 0);
+                    }
+
+                    return null;
+                };
                 $('td', nRow).each(function(i, v) {
                     //ID
                     $('td:eq(0)', nRow).addClass('text-center');
+                    
                     //Title tickets
                     $('td:eq(1)', nRow).css({width: '350px'});
+                    
                     //State
                     if (aData[2] === '0') {
                         $('td:eq(2)', nRow).html('Open');
@@ -640,6 +653,7 @@ $(document).ready(function() {
                         $('td:eq(2)', nRow).addClass('text-center');
                         $('td:eq(2)', nRow).css({color: '#fff', background: '#ff0000', width: '125px'});
                     }
+                    
                     //Priority
                     if (aData[3] === '0') {
                         $('td:eq(3)', nRow).addClass('text-center');
@@ -657,29 +671,52 @@ $(document).ready(function() {
                         $('td:eq(3)', nRow).html('High');
                         $('td:eq(3)', nRow).css({width: '80px'});
                     }
+                    
                     //Tags
                     $('td:eq(4)', nRow).css({width: '150px'});
+                    
                     //Created by
                     var a_creation_date = '<a class="popoverCreated" id="trigger_pop_created_' + aData[0] + '" href="javascript:void(0)" rel="popover" data-placement="bottom" data-original-title="Creation date" >' + aData[5] + '</a>';
                     $('td:eq(5)', nRow).html(a_creation_date);
                     $('td:eq(5)', nRow).addClass('text-center');
+                    
                     //Creation date (hidden by css)
                     $('td:eq(6)', nRow).attr('id', 'content_pop_created_' + aData[0]);
                     $('td:eq(6)', nRow).addClass('text-center');
                     $('td:eq(6)', nRow).css({display: 'none', visibility: 'hidden'});
+                    //Formtat DateTime 
+                    var creation_date = Date.createFromMysql(aData[6]);
+                    var format_creation_date = (creation_date.getDate() < 10 ? '0' : '') + creation_date.getDate() + '-' +
+                            (creation_date.getMonth() < 10 ? '0' : '') + (creation_date.getMonth() + 1) + '-'+
+                            creation_date.getFullYear();
+                    var format_creation_time =(creation_date.getHours() < 10 ? '0' : '')+creation_date.getHours()+':'+(creation_date.getMinutes() < 10 ? '0' : '')+creation_date.getMinutes()+':'+(creation_date.getSeconds() < 10 ? '0' : '')+creation_date.getSeconds();
+                    var cration_date_formated = "On " +format_creation_date+ " at "+format_creation_time;
+                    $('td:eq(6)', nRow).html(cration_date_formated);
+                    
                     //Assigned to
                     $('td:eq(7)', nRow).addClass('text-center');
+                    
                     //Updated by
                     var a_update_date = '';
                     if (aData[8] !== null) {
-                        a_update_date = '<a class="popoverUpdated" id="trigger_pop_update_' + aData[0] + '" href="javascript:void(0)" rel="popover" data-placement="bottom" data-original-title="Update date" >' + aData[8] + '</a>';
+                        a_update_date = '<a class="popoverUpdated" id="trigger_pop_update_' + aData[0] + '" href="javascript:void(0)" rel="popover" data-placement="bottom" data-original-title="Last update" >' + aData[8] + '</a>';
                     }
                     $('td:eq(8)', nRow).html(a_update_date);
                     $('td:eq(8)', nRow).addClass('text-center');
+                    
                     //Update date (hidden by css)
                     $('td:eq(9)', nRow).addClass('text-center');
                     $('td:eq(9)', nRow).attr('id', 'content_pop_update_' + aData[0]);
                     $('td:eq(9)', nRow).css({display: 'none', visibility: 'hidden'});
+                    //Formtat DateTime 
+                    var update_date = Date.createFromMysql(aData[9]);
+                    var format_update_date = (update_date.getDate() < 10 ? '0' : '') + update_date.getDate() + '-' +
+                            (update_date.getMonth() < 10 ? '0' : '') + (update_date.getMonth() + 1) + '-'+
+                            update_date.getFullYear();
+                    var format_update_time =(update_date.getHours() < 10 ? '0' : '')+update_date.getHours()+':'+(update_date.getMinutes() < 10 ? '0' : '')+update_date.getMinutes()+':'+(update_date.getSeconds() < 10 ? '0' : '')+update_date.getSeconds();
+                    var update_date_formated = "On " +format_update_date+ " at "+format_update_time;
+                    $('td:eq(9)', nRow).html(update_date_formated);
+                    
                     //Action
                     var edit_btn = '<a class="btn btn-primary btn-xs" href="edit_ticket/edit/' + aData[0] + '">Edit</a>';
                     $('td:eq(10)', nRow).html(edit_btn);
