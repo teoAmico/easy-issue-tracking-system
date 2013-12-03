@@ -721,9 +721,9 @@ $(document).ready(function() {
                     var edit_btn = '<a class="btn btn-primary btn-xs" href="edit_ticket/edit/' + aData[0] + '">Edit</a>';
                     $('td:eq(10)', nRow).html(edit_btn);
                     $('td:eq(10)', nRow).addClass('text-center');
-                    $("#manage_table_loading").hide();
                     return nRow;
                 });
+                $("#manage_table_loading").hide();
             }
         });
         $('.dataTables_filter input').addClass('search');
@@ -754,10 +754,8 @@ $(document).ready(function() {
             'success': function(data) {
                 var result = JSON.parse(data);
                 if (result['update'] === true) {
-                    $("#manage_table_loading").hide();
                     $("#table_tickets_info").html("");
                     $("#table_tickets > tbody").html(""); //I delete all children for not to see the old rows untill the new updated is completed
-                    $('#div_table_manage_tickets').show();
                     //reload the table width  new data
                     oTable.fnReloadAjax();
                 }

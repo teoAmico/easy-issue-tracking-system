@@ -137,7 +137,7 @@ echo form_open(base_url('filters/apply_filters'),$attributes);
         }
         echo form_checkbox('priority[]', 0, $low_flag, $attr_ck_low);
         echo '&nbsp;';
-        echo '<span>Low</span>';
+        echo '<label for="priority_low" style="font-weight: normal">Low</label>';
 
         echo '&nbsp;&nbsp;&nbsp;&nbsp;';
         $attr_ck_normal = 'id="priority_normal"';
@@ -147,7 +147,7 @@ echo form_open(base_url('filters/apply_filters'),$attributes);
         }
         echo form_checkbox('priority[]', 1, $normal_flag, $attr_ck_normal);
         echo '&nbsp;';
-        echo '<span>Normal</span>';
+        echo '<label for="priority_normal" style="font-weight: normal">Normal</label>';
 
         echo '&nbsp;&nbsp;&nbsp;&nbsp;';
         $attr_ck_high = 'id="priority_high"';
@@ -157,7 +157,7 @@ echo form_open(base_url('filters/apply_filters'),$attributes);
         }
         echo form_checkbox('priority[]', 2, $high_flag, $attr_ck_high);
         echo '&nbsp;';
-        echo '<span>High</span>';
+        echo '<label for="priority_high" style="font-weight: normal">High</label>';
         ?>
 
     </div>
@@ -171,7 +171,7 @@ echo form_open(base_url('filters/apply_filters'),$attributes);
         }
         echo form_checkbox('state[]', 0, $open_flag, $attr_ck_open);
         echo '&nbsp;';
-        echo '<span>Open</span>';
+        echo '<label for="state_open" style="font-weight: normal">Open</label>';
 
         echo '&nbsp;&nbsp;&nbsp;&nbsp;';
         $attr_ck_inprogress = 'id="state_inprogress"';
@@ -181,7 +181,7 @@ echo form_open(base_url('filters/apply_filters'),$attributes);
         }
         echo form_checkbox('state[]', 1, $inprogress_flag, $attr_ck_inprogress);
         echo '&nbsp;';
-        echo '<span>In progress</span>';
+        echo '<label for="state_inprogress" style="font-weight: normal">In progress</label>';
 
         echo '&nbsp;&nbsp;&nbsp;&nbsp;';
         $attr_ck_closed = 'id="state_closed"';
@@ -191,7 +191,7 @@ echo form_open(base_url('filters/apply_filters'),$attributes);
         }
         echo form_checkbox('state[]', 2, $closed_flag, $attr_ck_closed);
         echo '&nbsp;';
-        echo '<span>Closed</span>';
+        echo '<label for="state_closed" style="font-weight: normal">Closed</label>';
         ?>
     </div>
 </div>
